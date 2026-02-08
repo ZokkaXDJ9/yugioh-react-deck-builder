@@ -1,16 +1,5 @@
-const belongsToExtraDeck = (type) => {
-    if (        type === 'XYZ Monster' ||
-                type === 'Pendulum Effect Fusion Monster' ||
-                type === 'Synchro Monster' ||
-                type === 'Synchro Pendulum Effect Monster' ||
-                type === 'Synchro Tuner Monster' ||
-                type === 'XYZ Pendulum Effect Monster' ||
-                type === 'Fusion Monster' ||
-                type === 'Link Monster'
-            ) { return true} 
-            else {return false}  
-        
-}   
+import { sortMainDeck, sortExtraDeck, belongsToExtraDeck, sortAllCards } from '../../utils/deckSorter'
+
 
 const reducer = (state, action) => {
     let {payload, type, index} = action
@@ -18,13 +7,13 @@ const reducer = (state, action) => {
         case 'UPDATE_LISTER':
             return {
                 ...state,
-                lister: [...payload]
+                lister: sortAllCards(payload)
             }
 
         case 'UPDATE_LISTER_ITEMS':
             return {
                 ...state,
-                lister: [...state.lister, ...payload]
+                lister: [...state.lister, ...sortAllCards(payload)]
             }
         
         case 'ADD_CARD_TO_DECK':
@@ -74,6 +63,15 @@ const reducer = (state, action) => {
                 nextPageToLoad: payload
             }
         
+        case 'SORT_DECK':
+            return {
+                ...state,
+                deck: {
+                    main: sortMainDeck(state.deck.main),
+                    extra: sortExtraDeck(state.deck.extra)
+                }
+            }
+
     }
     return state
 }
