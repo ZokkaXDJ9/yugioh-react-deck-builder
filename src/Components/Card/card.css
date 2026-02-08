@@ -1,12 +1,59 @@
 .card {
-    width: 90px;
-    height: 120px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 90 / 131;
     background-color: gray;
     box-shadow: 0px 0px 10px black;
     cursor: pointer;
     background-repeat: no-repeat;
     background-size: contain;
     background-image: url('../../res/placeholder.png');
+    position: relative;
+}
+
+/* Banlist Icons */
+.card .ban-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    z-index: 10;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+}
+
+.ban-icon.limited {
+    background-color: #f39c12; /* Orange */
+    color: white;
+    border: 2px solid white;
+}
+
+.ban-icon.semi-limited {
+    background-color: #f1c40f; /* Yellow */
+    color: black;
+    border: 2px solid white;
+}
+
+.ban-icon.forbidden {
+    background-color: #c0392b; /* Red */
+    border: 2px solid white;
+}
+
+.ban-icon.forbidden::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 3px;
+    background-color: white;
+    transform: rotate(-45deg);
 }
 
 .card-modal {

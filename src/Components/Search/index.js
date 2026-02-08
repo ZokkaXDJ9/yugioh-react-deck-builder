@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { default as Axios } from "axios";
 import "./search.css";
 
@@ -10,11 +10,19 @@ var axios = Axios.create({
 
 const Search = () => {
   const dispatch = useDispatch();
+  const banlistType = useSelector(state => state.banlistType);
   const [name, setName] = useState("");
   const [race, setRace] = useState(""); //race is what usually is called type
   const [type, setType] = useState("");
   const [attribute, setAttribute] = useState("");
   const [level, setLevel] = useState("");
+  const [cardValues, setCardValues] = useState(null);
+
+  useEffect(() => {
+    axios.get('cardvalues.php')
+      .then(res => setCardValues(res.data))
+      .catch(err => console.error("Error fetching card values:", err));
+  }, []);
 
   const request = async () => {
     dispatch({ type: "SET_LOADING_STATE", payload: true });
@@ -41,9 +49,11 @@ const Search = () => {
   };
 
   const queryBuilder = () => {
-    return (
-      `cardinfo.php?num=30&offset=0` + name + race + type + level + attribute
-    );
+    let query = `cardinfo.php?num=30&offset=0` + name + race + type + level + attribute;
+    if (banlistType) {
+        query += `&format=${banlistType}`;
+    }
+    return query;
   };
 
   const levelSelector = (
@@ -53,18 +63,24 @@ const Search = () => {
       }
     >
       <option defaultChecked={true}>Unset</option>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-      <option>6</option>
-      <option>7</option>
-      <option>8</option>
-      <option>9</option>
-      <option>10</option>
-      <option>11</option>
-      <option>12</option>
+      {cardValues && cardValues.MONSTER && cardValues.MONSTER.level ? (
+        cardValues.MONSTER.level.map((lvl) => <option key={lvl}>{lvl}</option>)
+      ) : (
+        <>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+        </>
+      )}
     </select>
   );
 
@@ -75,45 +91,23 @@ const Search = () => {
       }
     >
       <option>Unset</option>
-      <optgroup label="Monster Cards">
-        <option>Aqua</option>
-        <option> Beast</option>
-        <option> Beast-Warrior</option>
-        <option> Cyberse</option>
-        <option> Dinosaur</option>
-        <option> Divine-Beast</option>
-        <option> Dragon</option>
-        <option> Fairy</option>
-        <option> Fiend</option>
-        <option> Fish</option>
-        <option> Insect</option>
-        <option> Machine</option>
-        <option> Plant</option>
-        <option> Psychic</option>
-        <option> Pyro</option>
-        <option> Reptile</option>
-        <option> Rock</option>
-        <option> Sea Serpent</option>
-        <option> Spellcaster</option>
-        <option> tdunder</option>
-        <option> Warrior</option>
-        <option> Winged Beast</option>
-        <option> Wyrm</option>
-        <option> Zombie</option>
-      </optgroup>
-      <optgroup label="Spell Cards">
-        <option>Normal</option>
-        <option>Field</option>
-        <option>Equip</option>
-        <option>Continuous</option>
-        <option>Quick-Play</option>
-        <option>Ritual</option>
-      </optgroup>
-      <optgroup label="Trap Cards">
-        <option>Normal</option>
-        <option>Continuous</option>
-        <option>Counter</option>
-      </optgroup>
+      {cardValues ? (
+        <>
+            <optgroup label="Monster Cards">
+                {cardValues.MONSTER.race.map(r => <option key={r}>{r}</option>)}
+            </optgroup>
+            <optgroup label="Spell Cards">
+                {cardValues.SPELL.race.map(r => <option key={r}>{r}</option>)}
+            </optgroup>
+            <optgroup label="Trap Cards">
+                {cardValues.TRAP.race.map(r => <option key={r}>{r}</option>)}
+            </optgroup>
+        </>
+      ) : (
+        <optgroup label="Loading...">
+             <option disabled>Loading...</option>
+        </optgroup>
+      )}
     </select>
   );
 
@@ -124,37 +118,22 @@ const Search = () => {
       }
     >
       <option>Unset</option>
-      <optgroup label="Main Deck Types">
-        <option>Effect Monster</option>
-        <option>Flip Effect Monster</option>
-        <option>Flip Tuner Effect Monster</option>
-        <option>Gemini Monster</option>
-        <option>Normal Monster</option>
-        <option>Normal Tuner Monster</option>
-        <option>Pendulum Effect Monster</option>
-        <option>Pendulum Flip Effect Monster</option>
-        <option>Pendulum Normal Monster</option>
-        <option>Pendulum Tuner Effect Monster</option>
-        <option>Ritual Effect Monster</option>
-        <option>Ritual Monster</option>
-        <option>Skill Card</option>
-        <option>Spell Card</option>
-        <option>Spirit Monster</option>
-        <option>Toon Monster</option>
-        <option>Trap Card</option>
-        <option>Tuner Monster</option>
-        <option>Union Effect Monster</option>
-      </optgroup>
-      <optgroup label="Extra Deck Types">
-        <option>Fusion Monster</option>
-        <option>Link Monster</option>
-        <option>Pendulum Effect Fusion Monster</option>
-        <option>Synchro Monster</option>
-        <option>Synchro Pendulum Effect Monster</option>
-        <option>Synchro Tuner Monster</option>
-        <option>XYZ Monster</option>
-        <option>XYZ Pendulum Effect Monster</option>
-      </optgroup>
+      {cardValues ? (
+          <>
+            <optgroup label="Main Deck Types">
+                {cardValues.types
+                    .filter(t => t.area.includes('MAIN'))
+                    .map(t => <option key={t.name}>{t.name}</option>)}
+            </optgroup>
+            <optgroup label="Extra Deck Types">
+                {cardValues.types
+                    .filter(t => t.area.includes('EXTRA'))
+                    .map(t => <option key={t.name}>{t.name}</option>)}
+            </optgroup>
+          </>
+      ) : (
+          <option disabled>Loading...</option>
+      )}
     </select>
   );
 
@@ -167,14 +146,11 @@ const Search = () => {
       }
     >
       <option>Unset</option>
-      <option>Dark</option>
-      <option>Divine</option>
-      <option>Earth</option>
-      <option>Fire</option>
-      <option>Light</option>
-      <option>Water</option>
-      <option>and</option>
-      <option>Wind</option>
+      {cardValues && cardValues.MONSTER && cardValues.MONSTER.attributes ? (
+          cardValues.MONSTER.attributes.map(attr => <option key={attr}>{attr}</option>)
+      ) : (
+          <option disabled>Loading...</option>
+      )}
     </select>
   );
 

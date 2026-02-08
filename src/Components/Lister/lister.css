@@ -25,6 +25,10 @@
     margin: 10px;
 }
 
+.lister .card {
+    width: 90px;
+}
+
 .lister button {
     display: flex;
 

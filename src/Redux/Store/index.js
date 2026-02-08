@@ -6,7 +6,10 @@ const initialState =  {
     deck: {main: [], extra: []},
     isLoading: false,
     hasMoreItemsToLoad: false,
-    nextPageToLoad: ''
+    nextPageToLoad: '',
+    banlist: {},
+    isUnlimitedMode: false,
+    banlistType: 'tcg'
 }
 
 const store = createStore(reducer, initialState)

@@ -11,26 +11,14 @@
   overflow-y: auto;
 }
 
-/* This targets the cards (and everything else by default) */
-.deck div {
-  margin-right: 5px;
-  margin-left: 5px;
-  margin-bottom: 5px;
-  float: left;
-}
-
-/* Reset layout for the containers of cards */
+/* Grid layout for 10 cards per row */
 .deck .main-deck-container,
 .deck .extra-deck-container {
-  float: none;
-  clear: both;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 5px;
   width: 100%;
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 0;
-  display: block;
-  /* Use flow-root to contain floats (modern clearfix) */
-  display: flow-root;
+  margin: 0;
 }
 
 /* The separator line */
