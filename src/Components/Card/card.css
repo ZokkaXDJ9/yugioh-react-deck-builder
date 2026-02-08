@@ -1,105 +1,105 @@
 .card {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 90 / 131;
-    background-color: gray;
-    box-shadow: 0px 0px 10px black;
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url('../../res/placeholder.png');
-    position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 90 / 131;
+  background-color: gray;
+  box-shadow: 0px 0px 10px black;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("../../res/placeholder.png");
+  position: relative;
 }
 
 /* Banlist Icons */
 .card .ban-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 24px;
-    height: 24px;
-    margin: 0;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    z-index: 10;
-    box-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  z-index: 10;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .ban-icon.limited {
-    background-color: #f39c12; /* Orange */
-    color: white;
-    border: 2px solid white;
+  background-color: #f39c12; /* Orange */
+  color: white;
+  border: 2px solid white;
 }
 
 .ban-icon.semi-limited {
-    background-color: #f1c40f; /* Yellow */
-    color: black;
-    border: 2px solid white;
+  background-color: #f1c40f; /* Yellow */
+  color: black;
+  border: 2px solid white;
 }
 
 .ban-icon.forbidden {
-    background-color: #c0392b; /* Red */
-    border: 2px solid white;
+  background-color: #c0392b; /* Red */
+  border: 2px solid white;
 }
 
 .ban-icon.forbidden::before {
-    content: '';
-    position: absolute;
-    width: 18px;
-    height: 3px;
-    background-color: white;
-    transform: rotate(-45deg);
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 3px;
+  background-color: white;
+  transform: rotate(-45deg);
 }
 
 .card-modal {
-    background-color: black;
-    color: white;
-    display: flex;
-    padding: 20px;
-    flex-direction: row;
-    width: 900px;
-    height: initial;
-    justify-content: space-evenly;
-    align-items: center;
+  background-color: black;
+  color: white;
+  display: flex;
+  padding: 20px;
+  flex-direction: row;
+  width: 900px;
+  height: initial;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
-.card-modal div, h6 {
-    text-shadow: 0px 0px 2px white;
-    letter-spacing: 1px;
-    padding: 10px;
-    margin-left: 10px;
-    height: 100%;
-    width: 70%;
-    font-size: 20px;
-    text-align: justify;
+.card-modal div,
+h6 {
+  text-shadow: 0px 0px 2px white;
+  letter-spacing: 1px;
+  padding: 10px;
+  margin-left: 10px;
+  height: 100%;
+  width: 70%;
+  font-size: 20px;
+  text-align: justify;
 }
 
-.card-modal img{
-    width: 200px;
-    height: 300px;
-    justify-self: flex-start;;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url('../../res/placeholder.png');
-    
+.card-modal img {
+  width: 200px;
+  height: 300px;
+  justify-self: flex-start;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("../../res/placeholder.png");
 }
 
-.card:hover{
-    cursor: pointer;
-    background: none;
-    opacity: 0.5;
+.card:hover {
+  cursor: pointer;
+  background: none;
+  opacity: 0.5;
 }
-.card img{
-    width: 90px;
-    height: 120px;
-    background-color: gray;
+.card img {
+  width: 90px;
+  height: 120px;
+  background-color: gray;
 }
 
-.card img:hover{
-    cursor: pointer;
+.card img:hover {
+  cursor: pointer;
 }

@@ -6,53 +6,53 @@ import {
 } from "../../utils/deckSorter";
 
 const getBanStatus = (name, banlist, banlistType) => {
-    if (!banlist) return 3;
-    const status = banlist[name];
-    
-    // For GOAT, if a card is not in the map (which contains all legal cards), it is Forbidden
-    if (banlistType === 'goat' && !status) return 0;
-    // For TCG/OCG, if a card is not in the map (which contains only banned cards), it is Unlimited
-    if (banlistType !== 'goat' && !status) return 3;
+  if (!banlist) return 3;
+  const status = banlist[name];
 
-    if (status === 'Forbidden') return 0;
-    if (status === 'Limited') return 1;
-    if (status === 'Semi-Limited') return 2;
-    return 3;
-}
+  // For GOAT, if a card is not in the map (which contains all legal cards), it is Forbidden
+  if (banlistType === "goat" && !status) return 0;
+  // For TCG/OCG, if a card is not in the map (which contains only banned cards), it is Unlimited
+  if (banlistType !== "goat" && !status) return 3;
+
+  if (status === "Forbidden") return 0;
+  if (status === "Limited") return 1;
+  if (status === "Semi-Limited") return 2;
+  return 3;
+};
 
 const initialState = {
   deck: {
     main: [],
     extra: [],
-    side: []
+    side: [],
   },
   lister: [],
   banlist: null,
   isUnlimitedMode: false,
-  banlistType: 'tcg'
-}
+  banlistType: "tcg",
+};
 
 const reducer = (state = initialState, action) => {
   let { payload, type, index } = action;
   switch (type) {
     case "SET_BANLIST":
-        return {
-            ...state,
-            banlist: payload
-        }
+      return {
+        ...state,
+        banlist: payload,
+      };
 
     case "SET_BANLIST_TYPE":
-        return {
-            ...state,
-            banlistType: payload,
-            banlist: null // Clear current banlist while fetching
-        }
-    
+      return {
+        ...state,
+        banlistType: payload,
+        banlist: null, // Clear current banlist while fetching
+      };
+
     case "TOGGLE_UNLIMITED":
-        return {
-            ...state,
-            isUnlimitedMode: !state.isUnlimitedMode
-        }
+      return {
+        ...state,
+        isUnlimitedMode: !state.isUnlimitedMode,
+      };
 
     case "UPDATE_LISTER":
       return {
@@ -68,10 +68,12 @@ const reducer = (state = initialState, action) => {
 
     case "ADD_CARD_TO_DECK":
       const currentCopies = [...state.deck.main, ...state.deck.extra].filter(
-        (c) => c.name === payload.name
+        (c) => c.name === payload.name,
       ).length;
 
-      const limit = state.isUnlimitedMode ? 3 : getBanStatus(payload.name, state.banlist, state.banlistType);
+      const limit = state.isUnlimitedMode
+        ? 3
+        : getBanStatus(payload.name, state.banlist, state.banlistType);
 
       if (currentCopies >= limit) {
         return state;

@@ -1,17 +1,17 @@
-import {createStore} from 'redux'
-import reducer from '../Reducers'
+import { createStore } from "redux";
+import reducer from "../Reducers";
 
-const initialState =  {
-    lister: [],
-    deck: {main: [], extra: []},
-    isLoading: false,
-    hasMoreItemsToLoad: false,
-    nextPageToLoad: '',
-    banlist: {},
-    isUnlimitedMode: false,
-    banlistType: 'tcg'
-}
+const initialState = {
+  lister: [],
+  deck: { main: [], extra: [] },
+  isLoading: false,
+  hasMoreItemsToLoad: false,
+  nextPageToLoad: "",
+  banlist: {},
+  isUnlimitedMode: false,
+  banlistType: "tcg",
+};
 
-const store = createStore(reducer, initialState)
+const store = createStore(reducer, initialState);
 
-export default store
+export default store;
