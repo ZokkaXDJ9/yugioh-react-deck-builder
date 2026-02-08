@@ -1,47 +1,46 @@
 .deck-container {
-    grid-area: deck;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    border: 1px solid #001B0C;
+  grid-area: deck;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #001b0c;
 }
 
 .deck {
-    height: fit-content;
-    overflow-y: auto;
+  height: fit-content;
+  overflow-y: auto;
 }
 
 /* This targets the cards (and everything else by default) */
 .deck div {
-    margin-right: 5px;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    float: left;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  float: left;
 }
 
 /* Reset layout for the containers of cards */
 .deck .main-deck-container,
 .deck .extra-deck-container {
-    float: none;
-    clear: both;
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    display: block;
-    /* Use flow-root to contain floats (modern clearfix) */
-    display: flow-root; 
+  float: none;
+  clear: both;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  display: block;
+  /* Use flow-root to contain floats (modern clearfix) */
+  display: flow-root;
 }
 
 /* The separator line */
 .deck .deck-separator {
-    float: none;
-    clear: both;
-    width: 100%;
-    height: 1px; /* Ensure it has height */
-    border: none; /* Reset default border if any */
-    border-top: 2px solid #33691e;
-    margin: 20px 0; /* Override the margins from .deck div */
-    display: block;
+  float: none;
+  clear: both;
+  width: 100%;
+  height: 1px; /* Ensure it has height */
+  border: none; /* Reset default border if any */
+  border-top: 2px solid #33691e;
+  margin: 20px 0; /* Override the margins from .deck div */
+  display: block;
 }
-
